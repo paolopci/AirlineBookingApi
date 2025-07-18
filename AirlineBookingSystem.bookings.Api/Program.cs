@@ -15,6 +15,7 @@ builder.Services.AddSwaggerGen();
 
 // Add Application Services
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+// Add Infrastructure Services
 builder.Services.AddScoped<IDbConnection>(sp => new SqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();

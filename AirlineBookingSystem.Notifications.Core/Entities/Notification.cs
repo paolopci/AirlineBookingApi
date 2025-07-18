@@ -13,6 +13,7 @@ namespace AirlineBookingSystem.Notifications.Core.Entities
          public string Recipient { get; set; }
          public string Message { get; set; }
          public string Type { get; set; } // Email, Sms , etc.
+          public DateTime SentAt { get; set; }
 
 
     }
