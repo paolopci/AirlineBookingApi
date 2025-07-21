@@ -1,4 +1,6 @@
 using System.Data;
+using System.Reflection;
+using AirlineBookingSystem.Payments.Application.Handlers;
 using AirlineBookingSystem.Payments.Core.Repositories;
 using AirlineBookingSystem.Payments.Infrastructure.Repositories;
 using Microsoft.Data.SqlClient;
@@ -12,6 +14,17 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//  Add MediatR
+var assembly = new Assembly[]
+{
+    Assembly.GetExecutingAssembly(),
+    typeof(ProcessPaymentHandler).Assembly,
+    typeof(RefundPaymentHandler).Assembly,
+};
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assembly));
+
+
 
 // Add Application Services
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
