@@ -1,4 +1,6 @@
 using System.Data;
+using System.Reflection;
+using AirlineBookingSystem.Bookings.Application.Handles;
 using AirlineBookingSystem.Bookings.Core.Repositories;
 using AirlineBookingSystem.Bookings.Infrastructure.Repositories;
 using Microsoft.Data.SqlClient;
@@ -12,6 +14,17 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+// Add MediatR
+var assembly = new Assembly[]
+{
+    Assembly.GetExecutingAssembly(),
+    typeof(CreateBookingHandler).Assembly,
+    typeof(GetBookingHandler).Assembly
+};
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assembly));
+
 
 // Add Application Services
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
