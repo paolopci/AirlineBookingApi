@@ -28,7 +28,7 @@ namespace AirlineBookingSystem.Payments.Api.Controllers
             return CreatedAtAction(nameof(ProcessPayment), new { id = result }, command);
         }
 
-        [HttpPost("refun/{id}")]
+        [HttpPost("refund/{id}")]
         public async Task<IActionResult> RefundPayment(Guid id)
         {
             var command = new RefundPaymentCommand(id);
