@@ -20,7 +20,7 @@ namespace AirlineBookingSystem.bookings.Api.Controllers
         public async Task<IActionResult> AddBooking([FromBody] CreateBookingCommand command)
         {
             var id=await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetBookingById), new { id }, null);
+            return CreatedAtAction(nameof(GetBookingById), new { id }, command);
         }
 
         [HttpGet("{id}")]
