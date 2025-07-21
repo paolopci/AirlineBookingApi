@@ -27,6 +27,7 @@ namespace AirlineBookingSystem.Bookings.Application.Handles
             };
 
             await _repository.AddBookingAsync(booking);
+            return booking.Id;
         }
     }
 }
