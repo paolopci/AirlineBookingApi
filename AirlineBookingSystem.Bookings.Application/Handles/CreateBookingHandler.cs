@@ -1,6 +1,7 @@
 ﻿using AirlineBookingSystem.Bookings.Application.Commands;
 using AirlineBookingSystem.Bookings.Core.Entities;
 using AirlineBookingSystem.Bookings.Core.Repositories;
+using MassTransit;
 using MediatR;
 
 
@@ -9,10 +10,12 @@ namespace AirlineBookingSystem.Bookings.Application.Handles
     public class CreateBookingHandler : IRequestHandler<CreateBookingCommand, Guid>
     {
         private readonly IBookingRepository _repository;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public CreateBookingHandler(IBookingRepository repository)
+        public CreateBookingHandler(IBookingRepository repository, IPublishEndpoint publishEndpoint)
         {
             _repository = repository;
+            _publishEndpoint = publishEndpoint;
         }
 
         public async Task<Guid> Handle(CreateBookingCommand request, CancellationToken cancellationToken)

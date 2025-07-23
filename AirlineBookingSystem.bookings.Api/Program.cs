@@ -3,6 +3,7 @@ using System.Reflection;
 using AirlineBookingSystem.Bookings.Application.Handles;
 using AirlineBookingSystem.Bookings.Core.Repositories;
 using AirlineBookingSystem.Bookings.Infrastructure.Repositories;
+using AirlineBookingSystem.BuildingBlocks.Common;
 using MassTransit;
 using Microsoft.Data.SqlClient;
 
