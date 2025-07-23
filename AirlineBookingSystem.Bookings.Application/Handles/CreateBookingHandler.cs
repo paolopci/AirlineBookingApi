@@ -33,6 +33,7 @@ namespace AirlineBookingSystem.Bookings.Application.Handles
 
             // Publish an event after booking creation (optional, based on your architecture)
             // 
+            
             await _publishEndpoint.Publish(new
             {
                 booking.Id,
