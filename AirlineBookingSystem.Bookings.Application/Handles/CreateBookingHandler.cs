@@ -30,6 +30,17 @@ namespace AirlineBookingSystem.Bookings.Application.Handles
             };
 
             await _repository.AddBookingAsync(booking);
+
+            // Publish an event after booking creation (optional, based on your architecture)
+            // 
+            await _publishEndpoint.Publish(new
+            {
+                booking.Id,
+                booking.FlightId,
+                booking.PassengerName,
+                booking.SeatNumber,
+                booking.BookingDate
+            }, cancellationToken);
             return booking.Id;
         }
     }
