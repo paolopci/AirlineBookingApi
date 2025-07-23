@@ -3,6 +3,7 @@ using System.Reflection;
 using AirlineBookingSystem.Bookings.Application.Handles;
 using AirlineBookingSystem.Bookings.Core.Repositories;
 using AirlineBookingSystem.Bookings.Infrastructure.Repositories;
+using MassTransit;
 using Microsoft.Data.SqlClient;
 
 
@@ -15,6 +16,21 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+// MassTransit Configuration
+builder.Services.AddMassTransit(config =>
+{
+    config.AddConsumer<NotificationEventConsumer>();
+
+    config.UsingRabbitMq((ct, cfg) =>
+    {
+        cfg.Host(builder.Configuration["EventBusSettings:HostAddress"]);
+        cfg.ReceiveEndpoint(EventBusConstant.NotificationSentQueue, c =>
+        {
+            c.ConfigureConsumer<NotificationEventConsumer>(ct);
+        });
+    });
+});
 
 // Add MediatR
 var assembly = new Assembly[]
