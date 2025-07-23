@@ -1,8 +1,12 @@
 using System.Data;
 using System.Reflection;
+using AirlineBookingSystem.BuildingBlocks.Common;
+using AirlineBookingSystem.BuildingBlocks.Contracts.EventBus.Messages;
+using AirlineBookingSystem.Payments.Application.Consumers;
 using AirlineBookingSystem.Payments.Application.Handlers;
 using AirlineBookingSystem.Payments.Core.Repositories;
 using AirlineBookingSystem.Payments.Infrastructure.Repositories;
+using MassTransit;
 using Microsoft.Data.SqlClient;
 
 
@@ -14,6 +18,24 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+// MassTransit Configuration ....
+builder.Services.AddMassTransit(config =>
+{
+    config.AddConsumer<FlightBookedConsumer>();
+
+    config.UsingRabbitMq((ct, cfg) =>
+    {
+        cfg.Host(builder.Configuration["EventBusSettings:HostAddress"]);
+        cfg.ReceiveEndpoint(EventBusConstant.NotificationSentQueue, c =>
+        {
+            c.ConfigureConsumer<FlightBookedConsumer>(ct);
+        });
+    });
+});
+
+
 
 //  Add MediatR
 var assembly = new Assembly[]

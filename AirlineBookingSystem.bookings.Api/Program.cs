@@ -1,5 +1,6 @@
 using System.Data;
 using System.Reflection;
+using AirlineBookingSystem.Bookings.Application.Consumers;
 using AirlineBookingSystem.Bookings.Application.Handles;
 using AirlineBookingSystem.Bookings.Core.Repositories;
 using AirlineBookingSystem.Bookings.Infrastructure.Repositories;
