@@ -17,7 +17,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-// MassTransit Configuration
+// MassTransit Configuration ....
 builder.Services.AddMassTransit(config =>
 {
     config.AddConsumer<NotificationEventConsumer>();
